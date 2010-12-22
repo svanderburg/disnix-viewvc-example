@@ -10,10 +10,18 @@ rec {
     type = "subversion-repository";
   };
 
+  viewvcdb = {
+    name = "viewvcdb";
+    pkg = pkgs.viewvcdb;
+    dependsOn = {};
+    type = "mysql-database";
+  };
+
   viewvc = {
     name = "viewvc";
     pkg = pkgs.viewvc;
     dependsOn = {
+      inherit viewvcdb;
       inherit ViewVCRepository;
     };
     type = "apache-webapplication";

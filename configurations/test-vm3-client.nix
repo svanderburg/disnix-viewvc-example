@@ -28,21 +28,22 @@
       enable = true;
     };
     
-    httpd = {
+    xserver = {
       enable = true;
-      documentRoot = "/var/www";
-      adminAddr = "admin@localhost";
-      extraConfig = ''
-        <Directory /var/www>
-          AllowOverride all
-	</Directory>
-      '';
-    };    
-    
-    mysql = {
-      enable = true;
-      rootPassword = ./mysqlpw;
-      initialScript = ./mysqlscript;
+      
+      displayManager = {
+        slim.enable = false;
+	auto.enable = true;
+      };
+      
+      windowManager = {
+        default = "icewm";
+        icewm = {
+	  enable = true;
+	};
+      };
+      
+      desktopManager.default = "none";
     };
   };
   
@@ -51,6 +52,7 @@
       pkgs.mc
       pkgs.subversion
       pkgs.lynx
+      pkgs.firefox
     ];
   };  
 }
