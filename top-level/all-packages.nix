@@ -29,7 +29,7 @@ rec {
   
   viewvc = import ../pkgs/viewvc {
     inherit stdenv fetchurl enscript gnused python setuptools;
-    inherit (pythonPackages) MySQL_python;
+    inherit (pkgs.pythonPackages) MySQL_python;
     
     subversion = subversion.override {
       pythonBindings = true;
