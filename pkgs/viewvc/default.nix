@@ -1,4 +1,4 @@
-{stdenv, fetchurl, python, subversion, MySQL_python, setuptools}:
+{stdenv, fetchurl, enscript, gnused, python, subversion, MySQL_python, setuptools}:
 interDependencies@{viewvcdb, ...}:
 
 let
@@ -36,12 +36,17 @@ stdenv.mkDerivation {
            -e '/import os/aos.environ["PYTHON_EGG_CACHE"] = "/tmp"' \
            $out/webapps/viewvc/bin/svndbadmin
 
+    # Fix the path to sed so that syntax highlighting will work
+    sed -i -e "s|'sed'|'${gnused}/bin/sed'|" $out/webapps/viewvc/lib/viewvc.py
+
     # Tweak the ViewVC configuration file
 
     sed -i -e "s/cvs_roots =/#cvs_roots =/" \
            -e "s%#svn_roots = svn: /home/svnrepos%svn_roots = ${svnRoots}%" \
            -e "s/root_as_url_component = 0/root_as_url_component = 1/" \
            -e "s/enabled = 0/enabled = 1/" \
+           -e "s/use_enscript = 0/use_enscript = 1/" \
+           -e "s%enscript_path =%enscript_path = ${enscript}/bin/%" \
            -e "s/#host = localhost/host = ${viewvcdb.target.hostname}/" \
            -e "s/#port = 3306/port = ${toString viewvcdb.target.mysqlPort}/" \
            -e "s/#database_name = ViewVC/database_name = ${viewvcdb.name}/" \

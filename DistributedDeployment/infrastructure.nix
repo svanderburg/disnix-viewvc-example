@@ -10,5 +10,6 @@
   test2 = {
     hostname = "test2";
     svnBaseDir = "/repos";
+    svnGroup = "root";
   };
 }
