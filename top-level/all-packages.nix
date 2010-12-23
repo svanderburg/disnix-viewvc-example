@@ -21,6 +21,10 @@ rec {
     inherit stdenv;
   };
   
+  maak = import ../pkgs/maak {
+    inherit stdenv;
+  };
+  
   ### Web front-end
   
   viewvc = import ../pkgs/viewvc {

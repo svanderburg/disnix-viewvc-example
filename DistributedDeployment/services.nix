@@ -19,6 +19,13 @@ rec {
     type = "subversion-repository";
   };
 
+  maak = {
+    name = "maak";
+    pkg = pkgs.maak;
+    dependsOn = {};
+    type = "subversion-repository";
+  };
+
   ### Databases
   
   viewvcdb = {
@@ -35,7 +42,7 @@ rec {
     pkg = pkgs.viewvc;
     dependsOn = {
       inherit viewvcdb;
-      inherit ViewVCRepository aefs; # Add your own subversion repositories here
+      inherit ViewVCRepository aefs maak; # Add your own subversion repositories here
     };
     type = "apache-webapplication";
   };  
