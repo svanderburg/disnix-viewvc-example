@@ -45,7 +45,7 @@ let
 	  ''
 	    # Start Firefox and take a screenshot
 	    
-	    $test3->mustSucceed("sleep 30; firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &");
+	    $test3->mustSucceed("sleep 60; firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &");
 	    $test3->waitForWindow(qr/Namoroka/);
 	    $test3->mustSucceed("sleep 30");  
 	    $test3->screenshot("screen");
