@@ -1,27 +1,27 @@
-{distribution, system}:
+{distribution, system, pkgs}:
 
-let pkgs = import ../top-level/all-packages.nix { inherit system; };
+let customPkgs = import ../top-level/all-packages.nix { inherit system pkgs; };
 in
 rec {
   ### Subversion repositories
   
   ViewVCRepository = {
     name = "ViewVCRepository";
-    pkg = pkgs.ViewVCRepository;
+    pkg = customPkgs.ViewVCRepository;
     dependsOn = {};
     type = "subversion-repository";
   };
   
   aefs = {
     name = "aefs";
-    pkg = pkgs.aefs;
+    pkg = customPkgs.aefs;
     dependsOn = {};
     type = "subversion-repository";
   };
 
   maak = {
     name = "maak";
-    pkg = pkgs.maak;
+    pkg = customPkgs.maak;
     dependsOn = {};
     type = "subversion-repository";
   };
@@ -30,7 +30,7 @@ rec {
   
   viewvcdb = {
     name = "viewvcdb";
-    pkg = pkgs.viewvcdb;
+    pkg = customPkgs.viewvcdb;
     dependsOn = {};
     type = "mysql-database";
   };
@@ -39,7 +39,7 @@ rec {
   
   viewvc = {
     name = "viewvc";
-    pkg = pkgs.viewvc;
+    pkg = customPkgs.viewvc;
     dependsOn = {
       inherit viewvcdb;
       inherit ViewVCRepository aefs maak; # Add your own subversion repositories here
