@@ -1,35 +1,33 @@
 {system, pkgs}:
 
-with pkgs;
-
 rec {
   ### Databases
   
   viewvcdb = import ../pkgs/viewvcdb {
-    inherit stdenv;
+    inherit (pkgs) stdenv;
   };
 
   ### Subversion repositories
   
   ViewVCRepository = import ../pkgs/ViewVCRepository {
-    inherit stdenv;
+    inherit (pkgs) stdenv;
   };
   
   aefs = import ../pkgs/aefs {
-    inherit stdenv;
+    inherit (pkgs) stdenv;
   };
   
   maak = import ../pkgs/maak {
-    inherit stdenv;
+    inherit (pkgs) stdenv;
   };
   
   ### Web front-end
   
   viewvc = import ../pkgs/viewvc {
-    inherit stdenv fetchurl enscript gnused python setuptools;
+    inherit (pkgs) stdenv fetchurl enscript gnused python setuptools;
     inherit (pkgs.pythonPackages) MySQL_python;
     
-    subversion = subversion.override {
+    subversion = pkgs.subversion.override {
       pythonBindings = true;
     };
   };
