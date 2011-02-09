@@ -44,7 +44,7 @@ let
 	installPhase = ''
 	  make DESTDIR=$out install
 	 
-	  echo "doc manual $out/share/doc/php-mysql/manual" >> $out/nix-support/hydra-build-products
+	  echo "doc manual $out/share/doc/viewvc/manual" >> $out/nix-support/hydra-build-products
 	'';
       };
 
