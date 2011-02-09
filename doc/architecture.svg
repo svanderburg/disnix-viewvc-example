@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="16cm" height="10cm" viewBox="194 88 302 184" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <path style="fill: #ffffff" d="M 412 89 L 495,89 L 495,127.571 C 478.4,121.143 470.1,121.143 453.5,127.571 C 436.9,134 428.6,134 412,127.571 L 412,89z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 412 89 L 495,89 L 495,127.571 C 478.4,121.143 470.1,121.143 453.5,127.571 C 436.9,134 428.6,134 412,127.571 L 412,89"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal" x="453.5" y="109.071">
+      <tspan x="453.5" y="109.071"></tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="317.924" y="232" width="66.15" height="38"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="317.924" y="232" width="66.15" height="38"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal" x="350.999" y="254.9">
+      <tspan x="350.999" y="254.9">viewvc</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="213" y="100" width="34" height="30"/>
+    <ellipse style="fill: #ffffff" cx="230" cy="130" rx="17" ry="5"/>
+    <ellipse style="fill: #ffffff" cx="230" cy="100" rx="17" ry="5"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="230" cy="100" rx="17" ry="5"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 247 100 L 247,130 C 247,132.761 239.389,135 230,135 C 220.611,135 213,132.761 213,130 L 213,100"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal" x="230" y="147">
+      <tspan x="230" y="147">ViewVCDB</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="351" y1="232" x2="271.147" y2="152.823"/>
+    <polygon style="fill: #000000" points="274.667,149.273 264.046,145.782 267.626,156.374 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="274.667,149.273 264.046,145.782 267.626,156.374 "/>
+  </g>
+  <g>
+    <path style="fill: #ffffff" d="M 403.374 98.4 L 484.624,98.4 L 484.624,144 C 468.374,136.4 460.249,136.4 443.999,144 C 427.749,151.6 419.624,151.6 403.374,144 L 403.374,98.4z"/>
+    <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 403.374 98.4 L 484.624,98.4 L 484.624,144 C 468.374,136.4 460.249,136.4 443.999,144 C 427.749,151.6 419.624,151.6 403.374,144 L 403.374,98.4"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:12.8;font-family:sanserif;font-style:normal;font-weight:normal" x="443.999" y="113.4">
+      <tspan x="443.999" y="113.4">Subversion</tspan>
+      <tspan x="443.999" y="129.4">repositories</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="351" y1="232" x2="414.578" y2="158.851"/>
+    <polygon style="fill: #000000" points="418.351,162.131 421.138,151.303 410.804,155.571 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="418.351,162.131 421.138,151.303 410.804,155.571 "/>
+  </g>
+</svg>
