@@ -21,16 +21,16 @@ stdenv.mkDerivation {
 
     # Add the Python Subversion and MySQL modules to the module search path
     
-    MySQLpythonEgg=$(echo ${MySQL_python}/lib/python2.6/site-packages/*.egg)
-    setuptoolsEgg=$(echo ${setuptools}/lib/python2.6/site-packages/*.egg)
+    MySQLpythonEgg=$(echo ${MySQL_python}/lib/python2.7/site-packages/*.egg)
+    setuptoolsEgg=$(echo ${setuptools}/lib/python2.7/site-packages/*.egg)
     
-    sed -i -e '/import os/asys.path.insert(0, "${subversion}/lib/python2.6/site-packages")' \
+    sed -i -e '/import os/asys.path.insert(0, "${subversion}/lib/python2.7/site-packages")' \
            -e '/import os/asys.path.insert(0, "'$setuptoolsEgg'")' \
            -e '/import os/asys.path.insert(0, "'$MySQLpythonEgg'")' \
            -e '/import os/aos.environ["PYTHON_EGG_CACHE"] = "/tmp"' \
            $out/webapps/viewvc/bin/cgi/viewvc.cgi
 
-    sed -i -e '/import os/asys.path.insert(0, "${subversion}/lib/python2.6/site-packages")' \
+    sed -i -e '/import os/asys.path.insert(0, "${subversion}/lib/python2.7/site-packages")' \
            -e '/import os/asys.path.insert(0, "'$setuptoolsEgg'")' \
            -e '/import os/asys.path.insert(0, "'$MySQLpythonEgg'")' \
            -e '/import os/aos.environ["PYTHON_EGG_CACHE"] = "/tmp"' \
