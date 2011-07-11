@@ -90,7 +90,7 @@ let
 	    # Start Firefox and take a screenshot
 	    
 	    $test3->mustSucceed("firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &");
-	    $test3->waitForWindow(qr/Tumucumaque/);
+	    $test3->waitForWindow(qr/Aurora/);
 	    $test3->mustSucceed("sleep 30");  
 	    $test3->screenshot("screen");
 	  '';
