@@ -24,7 +24,7 @@ rec {
   ### Web front-end
   
   viewvc = import ../pkgs/viewvc {
-    inherit (pkgs) stdenv fetchurl enscript gnused python setuptools;
+    inherit (pkgs) stdenv fetchurl gnused python setuptools;
     inherit (pkgs.pythonPackages) MySQL_python;
     
     subversion = pkgs.subversion.override {

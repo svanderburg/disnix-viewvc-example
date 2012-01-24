@@ -1,4 +1,4 @@
-{stdenv, fetchurl, enscript, gnused, python, subversion, MySQL_python, setuptools}:
+{stdenv, fetchurl, gnused, python, subversion, MySQL_python, setuptools}:
 interDependencies@{viewvcdb, ...}:
 
 let
@@ -10,10 +10,10 @@ let
     "${repository.name}: svn://${repository.target.hostname}/${repository.name}, ") (builtins.attrNames subversionRepositories);
 in
 stdenv.mkDerivation {
-  name = "viewvc-1.0.12";
+  name = "viewvc-1.1.13";
   src = fetchurl {
-    url = http://viewvc.tigris.org/files/documents/3330/47621/viewvc-1.0.12.tar.gz;
-    sha256 = "1zcmb5i7v3zhanyx6pahk4aiv66dw03s5j1yh6gxf1ns67ij28dj";  
+    url = http://viewvc.tigris.org/files/documents/3330/49161/viewvc-1.1.13.tar.gz;
+    sha256 = "1a27x8m7pz1aik75paqib7fq9633vah0yiljv22zcndzjsi4df99";
   };
   buildInputs = [ python ];
   installPhase = ''
@@ -41,13 +41,10 @@ stdenv.mkDerivation {
 
     # Tweak the ViewVC configuration file
 
-    sed -i -e "s/cvs_roots =/#cvs_roots =/" \
-           -e "s%#svn_roots = svn: /home/svnrepos%svn_roots = ${svnRoots}%" \
-           -e "s/root_as_url_component = 0/root_as_url_component = 1/" \
-           -e "s/enabled = 0/enabled = 1/" \
-           -e "s/use_enscript = 0/use_enscript = 1/" \
-           -e "s%enscript_path =%enscript_path = ${enscript}/bin/%" \
-           -e "s/#host = localhost/host = ${viewvcdb.target.hostname}/" \
+    sed -i -e "s%#svn_roots =%svn_roots = ${svnRoots}%" \
+           -e "s/#root_as_url_component = 0/root_as_url_component = 1/" \
+           -e "s/#enabled = 1/enabled = 1/" \
+           -e "s/#host =/host = ${viewvcdb.target.hostname}/" \
            -e "s/#port = 3306/port = ${toString viewvcdb.target.mysqlPort}/" \
            -e "s/#database_name = ViewVC/database_name = ${viewvcdb.name}/" \
            -e "s/#user =/user = ${viewvcdb.target.mysqlUsername}/" \
