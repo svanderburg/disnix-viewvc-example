@@ -7,7 +7,6 @@
     };
     
     disnix = {
-      enable = true;
       infrastructure = {
         svnGroup = "root";
       };

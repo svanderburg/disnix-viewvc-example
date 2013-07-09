@@ -6,10 +6,6 @@
       enable = true;
     };
     
-    disnix = {
-      enable = true;
-    };
-    
     httpd = {
       enable = true;
       documentRoot = "/var/www";
@@ -17,9 +13,9 @@
       extraConfig = ''
         <Directory /var/www>
           AllowOverride all
-	</Directory>
+        </Directory>
       '';
-    };    
+    };
     
     mysql = {
       enable = true;
