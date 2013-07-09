@@ -1,5 +1,5 @@
-{ nixpkgs ? /etc/nixos/nixpkgs
-, nixos ? /etc/nixos/nixos
+{ nixpkgs ? <nixpkgs>
+, nixos ? <nixos>
 }:
 
 let
@@ -18,8 +18,8 @@ let
       in
       disnixos.sourceTarball {
         name = "viewvc";
-	version = builtins.readFile ./version;
-	src = viewvc;
+        version = builtins.readFile ./version;
+        src = viewvc;
         inherit officialRelease;
       };
       
@@ -30,22 +30,22 @@ let
       
       releaseTools.nixBuild {
         name = "viewvc-doc";
-	version = builtins.readFile ./version;
-	src = tarball;
-	buildInputs = [ libxml2 libxslt dblatex tetex ];
-	
-	buildPhase = ''
-	  cd doc
-	  make docbookrng=${docbook5}/xml/rng/docbook docbookxsl=${docbook5_xsl}/xml/xsl/docbook
-	'';
-	
-	checkPhase = "true";
-	
-	installPhase = ''
-	  make DESTDIR=$out install
-	 
-	  echo "doc manual $out/share/doc/viewvc/manual" >> $out/nix-support/hydra-build-products
-	'';
+        version = builtins.readFile ./version;
+        src = tarball;
+        buildInputs = [ libxml2 libxslt dblatex tetex ];
+        
+        buildPhase = ''
+          cd doc
+          make docbookrng=${docbook5}/xml/rng/docbook docbookxsl=${docbook5_xsl}/xml/xsl/docbook
+        '';
+        
+        checkPhase = "true";
+        
+        installPhase = ''
+          make DESTDIR=$out install
+         
+          echo "doc manual $out/share/doc/viewvc/manual" >> $out/nix-support/hydra-build-products
+        '';
       };
 
     build =
@@ -62,13 +62,13 @@ let
       in
       disnixos.buildManifest {
         name = "viewvc";
-	version = builtins.readFile ./version;
-	inherit tarball;
-	servicesFile = "DistributedDeployment/services.nix";
-	networkFile = "DistributedDeployment/network.nix";
-	distributionFile = "DistributedDeployment/distribution.nix";
+        version = builtins.readFile ./version;
+        inherit tarball;
+        servicesFile = "DistributedDeployment/services.nix";
+        networkFile = "DistributedDeployment/network.nix";
+        distributionFile = "DistributedDeployment/distribution.nix";
       };
-            
+    
     tests = 
 
       let
@@ -82,19 +82,19 @@ let
         name = "viewvc";
         tarball = tarball {};
         manifest = build { system = "x86_64-linux"; };
-	networkFile = "DistributedDeployment/network.nix";
-	testScript =
-	  ''
-	    $test3->mustSucceed("sleep 30; curl --fail http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk");
-	    
-	    # Start Firefox and take a screenshot
-	    
-	    $test3->mustSucceed("firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &");
-	    $test3->waitForWindow(qr/Aurora/);
-	    $test3->mustSucceed("sleep 30");  
-	    $test3->screenshot("screen");
-	  '';
-      };              
+        networkFile = "DistributedDeployment/network.nix";
+        testScript =
+          ''
+            $test3->mustSucceed("sleep 30; curl --fail http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk");
+            
+            # Start Firefox and take a screenshot
+            
+            $test3->mustSucceed("firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &");
+            $test3->waitForWindow(qr/Nightly/);
+            $test3->mustSucceed("sleep 30");
+            $test3->screenshot("screen");
+          '';
+      };
   };
 in
 jobs
