@@ -2,6 +2,10 @@
 
 {
   services = {
+    disnix = {
+      enable = true;
+    };
+    
     openssh = {
       enable = true;
     };
@@ -30,5 +34,5 @@
       pkgs.subversion
       pkgs.lynx
     ];
-  };  
+  };
 }
