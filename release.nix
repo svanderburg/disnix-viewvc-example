@@ -1,19 +1,17 @@
 { nixpkgs ? <nixpkgs>
-, nixos ? <nixos>
+, viewvc ? {outPath = ./.; rev = 1234;}
+, officialRelease ? false
+, systems ? [ "i686-linux" "x86_64-linux" ]
 }:
 
 let
-
+  pkgs = import nixpkgs {};
+  
   jobs = rec {
     tarball =
-      { viewvc ? {outPath = ./.; rev = 1234;}
-      , officialRelease ? false}:
-    
       let
-        pkgs = import nixpkgs {};
-  
         disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs nixos;
+          inherit nixpkgs;
         };
       in
       disnixos.sourceTarball {
@@ -24,19 +22,15 @@ let
       };
       
     doc =
-      { tarball ? jobs.tarball {} }:
-      
-      with import nixpkgs {};
-      
-      releaseTools.nixBuild {
+      pkgs.releaseTools.nixBuild {
         name = "viewvc-doc";
         version = builtins.readFile ./version;
         src = tarball;
-        buildInputs = [ libxml2 libxslt dblatex tetex ];
+        buildInputs = [ pkgs.libxml2 pkgs.libxslt pkgs.dblatex pkgs.tetex ];
         
         buildPhase = ''
           cd doc
-          make docbookrng=${docbook5}/xml/rng/docbook docbookxsl=${docbook5_xsl}/xml/xsl/docbook
+          make docbookrng=${pkgs.docbook5}/xml/rng/docbook docbookxsl=${pkgs.docbook5_xsl}/xml/xsl/docbook
         '';
         
         checkPhase = "true";
@@ -49,33 +43,25 @@ let
       };
 
     build =
-      { tarball ? jobs.tarball {}
-      , system ? "x86_64-linux"
-      }:
-      
-      let
-        pkgs = import nixpkgs { inherit system; };
-  
-        disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs nixos system;
-        };
-      in
-      disnixos.buildManifest {
-        name = "viewvc";
-        version = builtins.readFile ./version;
-        inherit tarball;
-        servicesFile = "DistributedDeployment/services.nix";
-        networkFile = "DistributedDeployment/network.nix";
-        distributionFile = "DistributedDeployment/distribution.nix";
-      };
+      pkgs.lib.genAttrs systems (system:
+        let
+          disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
+            inherit nixpkgs system;
+          };
+        in
+        disnixos.buildManifest {
+          name = "viewvc";
+          version = builtins.readFile ./version;
+          inherit tarball;
+          servicesFile = "DistributedDeployment/services.nix";
+          networkFile = "DistributedDeployment/network.nix";
+          distributionFile = "DistributedDeployment/distribution.nix";
+        });
     
     tests = 
-
       let
-        pkgs = import nixpkgs {};
-  
         disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs nixos;
+          inherit nixpkgs;
         };
       in
       disnixos.disnixTest {

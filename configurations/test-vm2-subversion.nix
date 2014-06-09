@@ -2,15 +2,12 @@
 
 {
   services = {
-    disnix = {
-      enable = true;
-    };
-    
     openssh = {
       enable = true;
     };
     
     disnix = {
+      enable = true;
       infrastructure = {
         svnGroup = "root";
       };
