@@ -17,6 +17,8 @@
       enable = true;
     };
   };
+  
+  networking.firewall.allowedTCPPorts = [ 3690 ];
 
   environment = {
     systemPackages = [

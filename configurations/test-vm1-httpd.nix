@@ -23,10 +23,13 @@
     
     mysql = {
       enable = true;
+      package = pkgs.mysql;
       rootPassword = ./mysqlpw;
       initialScript = ./mysqlscript;
     };
   };
+  
+  networking.firewall.allowedTCPPorts = [ 80 3306 ];
   
   environment = {
     systemPackages = [
