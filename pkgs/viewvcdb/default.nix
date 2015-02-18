@@ -5,7 +5,7 @@ stdenv.mkDerivation {
   src = ./viewvc.sql;
   buildCommand =
   ''
-    ensureDir $out/mysql-databases
+    mkdir -p $out/mysql-databases
     cp $src $out/mysql-databases/viewvc.sql
   '';
 }
