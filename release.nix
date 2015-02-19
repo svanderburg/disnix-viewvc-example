@@ -66,8 +66,8 @@ let
       in
       disnixos.disnixTest {
         name = "viewvc";
-        tarball = tarball {};
-        manifest = build { system = "x86_64-linux"; };
+        inherit tarball;
+        manifest = builtins.getAttr (builtins.currentSystem) build;
         networkFile = "DistributedDeployment/network.nix";
         testScript =
           ''
