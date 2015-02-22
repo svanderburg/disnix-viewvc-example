@@ -10,10 +10,10 @@ let
     "${repository.name}: svn://${repository.target.hostname}/${repository.name}, ") (builtins.attrNames subversionRepositories);
 in
 stdenv.mkDerivation {
-  name = "viewvc-1.1.13";
+  name = "viewvc-1.1.23";
   src = fetchurl {
-    url = http://viewvc.tigris.org/files/documents/3330/49161/viewvc-1.1.13.tar.gz;
-    sha256 = "1a27x8m7pz1aik75paqib7fq9633vah0yiljv22zcndzjsi4df99";
+    url = http://viewvc.tigris.org/files/documents/3330/49392/viewvc-1.1.23.tar.gz;
+    sha256 = "0zcbb3r1jvn5388rr6vd42w8n3yddfagrabw38qgbs247yr90hni";
   };
   buildInputs = [ python ];
   installPhase = ''
