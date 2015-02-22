@@ -1,34 +1,28 @@
 {system, pkgs}:
 
-rec {
-  ### Databases
+let
+  callPackage = pkgs.lib.callPackageWith (pkgs // pkgs.pythonPackages // self);
   
-  viewvcdb = import ../pkgs/viewvcdb {
-    inherit (pkgs) stdenv;
-  };
-
-  ### Subversion repositories
-  
-  ViewVCRepository = import ../pkgs/ViewVCRepository {
-    inherit (pkgs) stdenv;
-  };
-  
-  aefs = import ../pkgs/aefs {
-    inherit (pkgs) stdenv;
-  };
-  
-  maak = import ../pkgs/maak {
-    inherit (pkgs) stdenv;
-  };
-  
-  ### Web front-end
-  
-  viewvc = import ../pkgs/viewvc {
-    inherit (pkgs) stdenv fetchurl gnused python setuptools;
-    inherit (pkgs.pythonPackages) MySQL_python;
+  self = {
+    ### Databases
     
-    subversion = pkgs.subversion.override {
-      pythonBindings = true;
+    viewvcdb = callPackage ../pkgs/viewvcdb { };
+    
+    ### Subversion repositories
+    
+    ViewVCRepository = callPackage ../pkgs/ViewVCRepository { };
+    
+    aefs = callPackage ../pkgs/aefs { };
+    
+    maak = callPackage ../pkgs/maak { };
+    
+    ### Web front-end
+    
+    viewvc = callPackage ../pkgs/viewvc {
+      subversion = pkgs.subversion.override {
+        pythonBindings = true;
+      };
     };
   };
-}
+in
+self
