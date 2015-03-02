@@ -1,4 +1,4 @@
-{stdenv, fetchurl, gnused, python, subversion, MySQL_python, setuptools}:
+{stdenv, fetchurl, gnused, diffutils, python, subversion, MySQL_python, setuptools}:
 interDependencies@{viewvcdb, ...}:
 
 let
@@ -51,6 +51,9 @@ stdenv.mkDerivation {
            -e "s/#passwd =/passwd = ${viewvcdb.target.mysqlPassword}/" \
            -e "s/#readonly_user =/readonly_user = ${viewvcdb.target.mysqlUsername}/" \
            -e "s/#readonly_passwd =/readonly_passwd = ${viewvcdb.target.mysqlPassword}/" \
+           -e "s|#svn =|svn = ${subversion}/bin/svn|" \
+           -e "s|#diff|diff = ${diffutils}/bin/diff|" \
+           -e "s|#enabled = 0|enabled = 1|" \
     $out/webapps/viewvc/viewvc.conf
 
     # Add htaccess file which allows execution of cgi-scripts
