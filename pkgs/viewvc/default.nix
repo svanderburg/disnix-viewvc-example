@@ -38,6 +38,9 @@ stdenv.mkDerivation {
 
     # Fix the path to sed so that syntax highlighting will work
     sed -i -e "s|'sed'|'${gnused}/bin/sed'|" $out/webapps/viewvc/lib/viewvc.py
+    
+    # Remove an assertion, preventing it from viewing remote repos. Seems to work fine without it.
+    sed -i -e "s|assert type|# assert type|" $out/webapps/viewvc/lib/vclib/svn/svn_repos.py
 
     # Tweak the ViewVC configuration file
 
@@ -52,7 +55,7 @@ stdenv.mkDerivation {
            -e "s/#readonly_user =/readonly_user = ${viewvcdb.target.mysqlUsername}/" \
            -e "s/#readonly_passwd =/readonly_passwd = ${viewvcdb.target.mysqlPassword}/" \
            -e "s|#svn =|svn = ${subversion}/bin/svn|" \
-           -e "s|#diff|diff = ${diffutils}/bin/diff|" \
+           -e "s|#diff =|diff = ${diffutils}/bin/diff|" \
            -e "s|#enabled = 0|enabled = 1|" \
     $out/webapps/viewvc/viewvc.conf
 
@@ -61,5 +64,8 @@ stdenv.mkDerivation {
     AddHandler cgi-script .cgi
     Options +ExecCGI
     EOF
+    
+    # Remove bytecode files to make the earlier changes are actually used
+    rm `find $out/webapps/viewvc -name \*.pyc`
   '';
 }
