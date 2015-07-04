@@ -6,7 +6,7 @@ CREATE TABLE branches (
   branch varchar(64) binary DEFAULT '' NOT NULL,
   PRIMARY KEY (id),
   UNIQUE branch (branch)
-) TYPE=MyISAM;
+);
 
 DROP TABLE IF EXISTS checkins;
 CREATE TABLE checkins (
@@ -29,7 +29,7 @@ CREATE TABLE checkins (
   KEY dirid (dirid),
   KEY fileid (fileid),
   KEY branchid (branchid)
-) TYPE=MyISAM;
+);
 
 DROP TABLE IF EXISTS descs;
 CREATE TABLE descs (
@@ -38,7 +38,7 @@ CREATE TABLE descs (
   hash bigint(20) DEFAULT '0' NOT NULL,
   PRIMARY KEY (id),
   KEY hash (hash)
-) TYPE=MyISAM;
+);
 
 DROP TABLE IF EXISTS dirs;
 CREATE TABLE dirs (
@@ -46,7 +46,7 @@ CREATE TABLE dirs (
   dir varchar(255) binary DEFAULT '' NOT NULL,
   PRIMARY KEY (id),
   UNIQUE dir (dir)
-) TYPE=MyISAM;
+);
 
 DROP TABLE IF EXISTS files;
 CREATE TABLE files (
@@ -54,7 +54,7 @@ CREATE TABLE files (
   file varchar(255) binary DEFAULT '' NOT NULL,
   PRIMARY KEY (id),
   UNIQUE file (file)
-) TYPE=MyISAM;
+);
 
 DROP TABLE IF EXISTS people;
 CREATE TABLE people (
@@ -62,7 +62,7 @@ CREATE TABLE people (
   who varchar(32) binary DEFAULT '' NOT NULL,
   PRIMARY KEY (id),
   UNIQUE who (who)
-) TYPE=MyISAM;
+);
 
 DROP TABLE IF EXISTS repositories;
 CREATE TABLE repositories (
@@ -70,7 +70,7 @@ CREATE TABLE repositories (
   repository varchar(64) binary DEFAULT '' NOT NULL,
   PRIMARY KEY (id),
   UNIQUE repository (repository)
-) TYPE=MyISAM;
+);
 
 DROP TABLE IF EXISTS tags;
 CREATE TABLE tags (
@@ -84,4 +84,4 @@ CREATE TABLE tags (
   KEY dirid (dirid),
   KEY fileid (fileid),
   KEY branchid (branchid)
-) TYPE=MyISAM;
+);
