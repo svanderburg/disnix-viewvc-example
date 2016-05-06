@@ -1,15 +1,30 @@
 {
   test1 = {
-    hostname = "test1";
-    documentRoot = "/var/www";
-    mysqlPort = 3307;
-    mysqlUsername = "root";
-    mysqlPassword = builtins.readFile ../configurations/mysqlpw;
+    properties = {
+      hostname = "test1";
+    };
+    containers = {
+      apache-webapplication = {
+        documentRoot = "/var/www";
+      };
+      
+      mysql-database = {
+        mysqlPort = 3307;
+        mysqlUsername = "root";
+        mysqlPassword = builtins.readFile ../configurations/mysqlpw;
+      };
+    };
   };
   
   test2 = {
-    hostname = "test2";
-    svnBaseDir = "/repos";
-    svnGroup = "root";
+    properties = {
+      hostname = "test2";
+    };
+    containers = {
+      subversion-repository = {
+        svnBaseDir = "/repos";
+        svnGroup = "root";
+      };
+    };
   };
 }

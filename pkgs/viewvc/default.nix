@@ -7,7 +7,7 @@ let
   svnRoots = stdenv.lib.concatMapStrings (serviceName:
     let repository = builtins.getAttr serviceName subversionRepositories;
     in
-    "${repository.name}: svn://${repository.target.hostname}/${repository.name}, ") (builtins.attrNames subversionRepositories);
+    "${repository.name}: svn://${repository.target.properties.hostname}/${repository.name}, ") (builtins.attrNames subversionRepositories);
 in
 stdenv.mkDerivation {
   name = "viewvc-1.1.23";
@@ -47,13 +47,13 @@ stdenv.mkDerivation {
     sed -i -e "s%#svn_roots =%svn_roots = ${svnRoots}%" \
            -e "s/#root_as_url_component = 0/root_as_url_component = 1/" \
            -e "s/#enabled = 1/enabled = 1/" \
-           -e "s/#host =/host = ${viewvcdb.target.hostname}/" \
-           -e "s/#port = 3306/port = ${toString viewvcdb.target.mysqlPort}/" \
+           -e "s/#host =/host = ${viewvcdb.target.properties.hostname}/" \
+           -e "s/#port = 3306/port = ${toString viewvcdb.target.container.mysqlPort}/" \
            -e "s/#database_name = ViewVC/database_name = ${viewvcdb.name}/" \
-           -e "s/#user =/user = ${viewvcdb.target.mysqlUsername}/" \
-           -e "s/#passwd =/passwd = ${viewvcdb.target.mysqlPassword}/" \
-           -e "s/#readonly_user =/readonly_user = ${viewvcdb.target.mysqlUsername}/" \
-           -e "s/#readonly_passwd =/readonly_passwd = ${viewvcdb.target.mysqlPassword}/" \
+           -e "s/#user =/user = ${viewvcdb.target.container.mysqlUsername}/" \
+           -e "s/#passwd =/passwd = ${viewvcdb.target.container.mysqlPassword}/" \
+           -e "s/#readonly_user =/readonly_user = ${viewvcdb.target.container.mysqlUsername}/" \
+           -e "s/#readonly_passwd =/readonly_passwd = ${viewvcdb.target.container.mysqlPassword}/" \
            -e "s|#svn =|svn = ${subversion}/bin/svn|" \
            -e "s|#diff =|diff = ${diffutils}/bin/diff|" \
            -e "s|#enabled = 0|enabled = 1|" \
