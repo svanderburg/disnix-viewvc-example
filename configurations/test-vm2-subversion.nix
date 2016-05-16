@@ -8,13 +8,18 @@
     
     disnix = {
       enable = true;
-      infrastructure = {
-        svnGroup = "root";
-      };
     };
     
     svnserve = {
       enable = true;
+    };
+  };
+  
+  dysnomia = {
+    extraContainerProperties = {
+      subversion-repository = {
+        svnGroup = "root";
+      };
     };
   };
   
