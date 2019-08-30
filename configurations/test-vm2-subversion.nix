@@ -5,16 +5,16 @@
     openssh = {
       enable = true;
     };
-    
+
     disnix = {
       enable = true;
     };
-    
+
     svnserve = {
       enable = true;
     };
   };
-  
+
   dysnomia = {
     extraContainerProperties = {
       subversion-repository = {
@@ -22,7 +22,7 @@
       };
     };
   };
-  
+
   networking.firewall.allowedTCPPorts = [ 3690 ];
 
   environment = {

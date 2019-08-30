@@ -10,20 +10,20 @@ let
     "${repository.name}: svn://${repository.target.properties.hostname}/${repository.name}, ") (builtins.attrNames subversionRepositories);
 in
 stdenv.mkDerivation {
-  name = "viewvc-1.1.23";
+  name = "viewvc-1.1.26";
   src = fetchurl {
-    url = http://viewvc.tigris.org/files/documents/3330/49392/viewvc-1.1.23.tar.gz;
-    sha256 = "0zcbb3r1jvn5388rr6vd42w8n3yddfagrabw38qgbs247yr90hni";
+    url = http://www.viewvc.org/downloads/viewvc-1.1.26.tar.gz;
+    sha256 = "0hvf8bgc4r57adlpkarlhdmwyqq3xh5jr0822d8lvh3zvwvq4wcx";
   };
   buildInputs = [ python ];
   installPhase = ''
     python viewvc-install --prefix=$out/webapps/viewvc --destdir=
 
     # Add the Python Subversion and MySQL modules to the module search path
-    
+
     MySQLpythonEgg=$(echo ${MySQL_python}/lib/python2.7/site-packages/*.egg)
     setuptoolsEgg=$(echo ${setuptools}/lib/python2.7/site-packages/*.egg)
-    
+
     sed -i -e '/import os/asys.path.insert(0, "${subversion}/lib/python2.7/site-packages")' \
            -e '/import os/asys.path.insert(0, "'$setuptoolsEgg'")' \
            -e '/import os/asys.path.insert(0, "'$MySQLpythonEgg'")' \
@@ -38,7 +38,7 @@ stdenv.mkDerivation {
 
     # Fix the path to sed so that syntax highlighting will work
     sed -i -e "s|'sed'|'${gnused}/bin/sed'|" $out/webapps/viewvc/lib/viewvc.py
-    
+
     # Remove an assertion, preventing it from viewing remote repos. Seems to work fine without it.
     sed -i -e "s|assert type|# assert type|" $out/webapps/viewvc/lib/vclib/svn/svn_repos.py
 
@@ -64,7 +64,7 @@ stdenv.mkDerivation {
     AddHandler cgi-script .cgi
     Options +ExecCGI
     EOF
-    
+
     # Remove bytecode files to make the earlier changes are actually used
     rm `find $out/webapps/viewvc -name \*.pyc`
   '';
