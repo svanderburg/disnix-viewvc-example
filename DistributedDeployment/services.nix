@@ -4,14 +4,14 @@ let customPkgs = import ../top-level/all-packages.nix { inherit system pkgs; };
 in
 rec {
   ### Subversion repositories
-  
+
   ViewVCRepository = {
     name = "ViewVCRepository";
     pkg = customPkgs.ViewVCRepository;
     dependsOn = {};
     type = "subversion-repository";
   };
-  
+
   aefs = {
     name = "aefs";
     pkg = customPkgs.aefs;
@@ -27,16 +27,20 @@ rec {
   };
 
   ### Databases
-  
-  viewvcdb = {
+
+  viewvcdb = rec {
     name = "viewvcdb";
-    pkg = customPkgs.viewvcdb;
+    mysqlUsername = "viewvcdb";
+    mysqlPassword = "viewvcdb";
+    pkg = customPkgs.viewvcdb {
+      inherit mysqlUsername mysqlPassword;
+    };
     dependsOn = {};
     type = "mysql-database";
   };
 
   ### Web front-ends
-  
+
   viewvc = {
     name = "viewvc";
     pkg = customPkgs.viewvc;
@@ -45,5 +49,5 @@ rec {
       inherit ViewVCRepository aefs maak; # Add your own subversion repositories here
     };
     type = "apache-webapplication";
-  };  
+  };
 }

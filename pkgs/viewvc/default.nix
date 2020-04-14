@@ -1,19 +1,19 @@
-{stdenv, fetchurl, gnused, diffutils, python, subversion, MySQL_python, setuptools}:
+{stdenv, fetchurl, gnused, diffutils, python, subversion, pymysql, setuptools}:
 interDependencies@{viewvcdb, ...}:
 
 let
   subversionRepositories = builtins.removeAttrs interDependencies [ "viewvcdb" ];
-  
+
   svnRoots = stdenv.lib.concatMapStrings (serviceName:
     let repository = builtins.getAttr serviceName subversionRepositories;
     in
     "${repository.name}: svn://${repository.target.properties.hostname}/${repository.name}, ") (builtins.attrNames subversionRepositories);
 in
 stdenv.mkDerivation {
-  name = "viewvc-1.1.26";
+  name = "viewvc-1.2.1";
   src = fetchurl {
-    url = http://www.viewvc.org/downloads/viewvc-1.1.26.tar.gz;
-    sha256 = "0hvf8bgc4r57adlpkarlhdmwyqq3xh5jr0822d8lvh3zvwvq4wcx";
+    url = http://www.viewvc.org/downloads/viewvc-1.2.1.tar.gz;
+    sha256 = "0j9yl9w9bjxgrcl17wibqbl5m1lrkrd8abncyn8dys84zhsjvg5g";
   };
   buildInputs = [ python ];
   installPhase = ''
@@ -21,7 +21,7 @@ stdenv.mkDerivation {
 
     # Add the Python Subversion and MySQL modules to the module search path
 
-    MySQLpythonEgg=$(echo ${MySQL_python}/lib/python2.7/site-packages/*.egg)
+    MySQLpythonEgg=$(echo ${pymysql}/lib/python2.7/site-packages/*.egg)
     setuptoolsEgg=$(echo ${setuptools}/lib/python2.7/site-packages/*.egg)
 
     sed -i -e '/import os/asys.path.insert(0, "${subversion}/lib/python2.7/site-packages")' \
@@ -50,10 +50,10 @@ stdenv.mkDerivation {
            -e "s/#host =/host = ${viewvcdb.target.properties.hostname}/" \
            -e "s/#port = 3306/port = ${toString viewvcdb.target.container.mysqlPort}/" \
            -e "s/#database_name = ViewVC/database_name = ${viewvcdb.name}/" \
-           -e "s/#user =/user = ${viewvcdb.target.container.mysqlUsername}/" \
-           -e "s/#passwd =/passwd = ${viewvcdb.target.container.mysqlPassword}/" \
-           -e "s/#readonly_user =/readonly_user = ${viewvcdb.target.container.mysqlUsername}/" \
-           -e "s/#readonly_passwd =/readonly_passwd = ${viewvcdb.target.container.mysqlPassword}/" \
+           -e "s/#user =/user = ${viewvcdb.mysqlUsername}/" \
+           -e "s/#passwd =/passwd = ${viewvcdb.mysqlPassword}/" \
+           -e "s/#readonly_user =/readonly_user = ${viewvcdb.mysqlUsername}/" \
+           -e "s/#readonly_passwd =/readonly_passwd = ${viewvcdb.mysqlPassword}/" \
            -e "s|#svn =|svn = ${subversion}/bin/svn|" \
            -e "s|#diff =|diff = ${diffutils}/bin/diff|" \
            -e "s|#enabled = 0|enabled = 1|" \
