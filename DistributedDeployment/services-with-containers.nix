@@ -9,7 +9,7 @@
 }:
 
 let
-  processType = import ../../../nix-processmgmt/nixproc/derive-dysnomia-process-type.nix {
+  processType = import ../../nix-processmgmt/nixproc/derive-dysnomia-process-type.nix {
     inherit processManager;
   };
 
@@ -33,7 +33,7 @@ rec {
     type = processType;
   };
 
-  simpleWebappApache = constructors.simpleWebappApache rec {
+  apache = constructors.simpleWebappApache rec {
     port = 80;
     serverAdmin = "root@localhost";
     enablePHP = true;
