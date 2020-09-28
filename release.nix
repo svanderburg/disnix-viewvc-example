@@ -7,59 +7,50 @@
 let
   pkgs = import nixpkgs {};
 
+  disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
+    inherit nixpkgs;
+  };
+
+  version = builtins.readFile ./version;
+
   jobs = rec {
-    tarball =
+    tarball = disnixos.sourceTarball {
+      name = "viewvc";
+      src = viewvc;
+      inherit officialRelease version;
+    };
+
+    build = pkgs.lib.genAttrs systems (system:
       let
         disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs;
+          inherit nixpkgs system;
         };
       in
-      disnixos.sourceTarball {
+      disnixos.buildManifest {
         name = "viewvc";
-        version = builtins.readFile ./version;
-        src = viewvc;
-        inherit officialRelease;
-      };
-
-    build =
-      pkgs.lib.genAttrs systems (system:
-        let
-          disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-            inherit nixpkgs system;
-          };
-        in
-        disnixos.buildManifest {
-          name = "viewvc";
-          version = builtins.readFile ./version;
-          inherit tarball;
-          servicesFile = "DistributedDeployment/services.nix";
-          networkFile = "DistributedDeployment/network.nix";
-          distributionFile = "DistributedDeployment/distribution.nix";
-        });
-
-    tests =
-      let
-        disnixos = import "${pkgs.disnixos}/share/disnixos/testing.nix" {
-          inherit nixpkgs;
-        };
-      in
-      disnixos.disnixTest {
-        name = "viewvc";
-        inherit tarball;
-        manifest = builtins.getAttr (builtins.currentSystem) build;
+        inherit tarball version;
+        servicesFile = "DistributedDeployment/services.nix";
         networkFile = "DistributedDeployment/network.nix";
-        testScript =
-          ''
-            $test3->mustSucceed("sleep 30; curl --fail http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk");
+        distributionFile = "DistributedDeployment/distribution.nix";
+      });
 
-            # Start Firefox and take a screenshot
+    tests = disnixos.disnixTest {
+      name = "viewvc";
+      inherit tarball;
+      manifest = builtins.getAttr (builtins.currentSystem) build;
+      networkFile = "DistributedDeployment/network.nix";
+      testScript =
+        ''
+          test3.succeed("sleep 30; curl --fail http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk")
 
-            $test3->mustSucceed("firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &");
-            $test3->waitForWindow(qr/Firefox/);
-            $test3->mustSucceed("sleep 30");
-            $test3->screenshot("screen");
-          '';
-      };
+          # Start Firefox and take a screenshot
+
+          test3.succeed("firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &")
+          test3.wait_for_window("Firefox")
+          test3.succeed("sleep 30")
+          test3.screenshot("screen")
+        '';
+    };
   };
 in
 jobs
