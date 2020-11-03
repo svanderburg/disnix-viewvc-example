@@ -39,7 +39,7 @@ rec {
     serverAdmin = "root@localhost";
     enablePHP = true;
     enableCGI = true;
-    documentRoot = "/var/www";
+    documentRoot = "${stateDir}/www";
     extraConfig = ''
       <Directory ${documentRoot}>
         AllowOverride all
