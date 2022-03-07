@@ -1,10 +1,10 @@
-{stdenv, fetchurl, gnused, diffutils, python, subversion, pymysql, setuptools}:
+{stdenv, lib, fetchurl, gnused, diffutils, python, subversion, pymysql, setuptools}:
 interDependencies@{viewvcdb, ...}:
 
 let
   subversionRepositories = builtins.removeAttrs interDependencies [ "viewvcdb" ];
 
-  svnRoots = stdenv.lib.concatMapStrings (serviceName:
+  svnRoots = lib.concatMapStrings (serviceName:
     let repository = builtins.getAttr serviceName subversionRepositories;
     in
     "${repository.name}: svn://${repository.target.properties.hostname}/${repository.name}, ") (builtins.attrNames subversionRepositories);
