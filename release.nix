@@ -68,7 +68,7 @@ let
 
               # Start Firefox and take a screenshot
 
-              test3.succeed("firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk &")
+              test3.succeed("firefox http://test1/viewvc/bin/cgi/viewvc.cgi/aefs/trunk >&2 &")
               test3.wait_for_window("Firefox")
               test3.succeed("sleep 30")
               test3.screenshot("screen")

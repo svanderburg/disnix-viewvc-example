@@ -7,7 +7,7 @@
 , libDir ? "${stateDir}/lib"
 , tmpDir ? (if stateDir == "/var" then "/tmp" else "${stateDir}/tmp")
 , forceDisableUserChange ? false
-, processManager ? "sysvinit"
+, processManager ? "systemd"
 , nix-processmgmt ? ../../../nix-processmgmt
 , nix-processmgmt-services ? ../../../nix-processmgmt-services
 }:

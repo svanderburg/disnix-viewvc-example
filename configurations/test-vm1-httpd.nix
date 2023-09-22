@@ -25,11 +25,15 @@
 
     mysql = {
       enable = true;
-      package = pkgs.mysql;
+      package = pkgs.mariadb;
     };
   };
 
   networking.firewall.allowedTCPPorts = [ 80 3306 ];
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "python-2.7.18.6"
+  ];
 
   environment = {
     systemPackages = [

@@ -1,9 +1,19 @@
 {system, pkgs}:
 
 let
+  pkgs = import <nixpkgs> {
+    config.permittedInsecurePackages = [
+      "python-2.7.18.6"
+    ];
+  };
+
   callPackage = pkgs.lib.callPackageWith (pkgs // pkgs.pythonPackages // self);
 
   self = {
+    ### Libraries
+
+    pymysql = callPackage ../pkgs/pymysql { };
+
     ### Databases
 
     viewvcdb = callPackage ../pkgs/viewvcdb { };
